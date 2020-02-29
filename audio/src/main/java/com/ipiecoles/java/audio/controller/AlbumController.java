@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ipiecoles.java.audio.model.Album;
-import com.ipiecoles.java.audio.model.Artist;
+
 import com.ipiecoles.java.audio.repository.AlbumRepository;
 
 @RestController
@@ -28,7 +28,7 @@ public class AlbumController {
 	@ResponseStatus(HttpStatus.CREATED)
 	 public Album ajoutAlbum(
 			 @RequestBody Album album) {
-		
+					
 		 return albumRepository.save(album);
 		 
 	 }
