@@ -16,26 +16,29 @@ public class GlobalExceptionHandler {
 			EntityNotFoundException entityNotFoundException) {
 		return entityNotFoundException.getMessage();
 	}
-	
+
 	@ExceptionHandler(IllegalArgumentException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public String handleIllegalArgumentException(
 			IllegalArgumentException illegalArgumentException) {
 		return illegalArgumentException.getMessage();
 	}
-	
+
 	@ExceptionHandler(ArtistException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public String handleArtistException(
 			ArtistException artistException) {
 		return artistException.getMessage();
 	}
-	
+
 	@ExceptionHandler(ConflictException.class)
 	@ResponseStatus(HttpStatus.CONFLICT)
 	public String handleConflictException(
 			ConflictException conflictException) {
 		return conflictException.getMessage();
 	}
-	
+
+
 }
+
+

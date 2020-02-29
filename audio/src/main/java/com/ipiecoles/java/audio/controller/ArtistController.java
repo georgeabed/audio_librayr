@@ -8,7 +8,7 @@ import javax.persistence.EntityNotFoundException;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionFailedException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -21,13 +21,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
 
 import com.ipiecoles.java.audio.exception.ArtistException;
 import com.ipiecoles.java.audio.exception.ConflictException;
-import com.ipiecoles.java.audio.model.Album;
+
 import com.ipiecoles.java.audio.model.Artist;
-import com.ipiecoles.java.audio.repository.AlbumRepository;
+
 import com.ipiecoles.java.audio.repository.ArtistRepository;
 
 
@@ -39,8 +39,6 @@ public class ArtistController {
 	@Autowired
 	private ArtistRepository artistRepository;
 
-	@Autowired
-	private AlbumRepository albumRepository;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Artist getArtistById(@PathVariable("id") Integer id) {
@@ -69,19 +67,16 @@ public class ArtistController {
 		if(artist==null) {
 			throw new EntityNotFoundException("L'artiste: " + name + " n'a pas été trouvé !");
 		}
-
+		
 		if(size <=0 || size > 50) {
 			throw new IllegalArgumentException("La taille des pages doit être compris entre 0 et 50");
 		}
-
+		
 		Long maxPage = artistRepository.count()/size;
 		if(page < 0 || page > maxPage) {
 			throw new IllegalArgumentException("La page " + page + " doit être compris entre 0 et " + maxPage);
 		}
 		
-		if(!(sortDirection.isAscending() && sortDirection.isDescending())) {
-			
-		}
 		
 		if(Arrays.stream(Artist.class.getDeclaredFields()).map(Field::getName).filter(s -> s.equals(sortProperty)).count() !=1) {
 			throw new IllegalArgumentException("La propriété " + sortProperty + " n'existe pas !");
@@ -98,7 +93,6 @@ public class ArtistController {
 	}
 
 
-
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public Page<Artist> findAllArtists(
 			@RequestParam("page") Integer page,
@@ -106,15 +100,17 @@ public class ArtistController {
 			@RequestParam("sortDirection") Sort.Direction sortDirection,
 			@RequestParam("sortProperty") String sortProperty
 			){
+		
+		
 
 		if(size <=0 || size > 50) {
 			throw new IllegalArgumentException("La taille des pages doit être compris entre 0 et 50");
 		}
-
+		
 		Long maxPage = artistRepository.count()/size;
 		if(page < 0 || page > maxPage) {
 			throw new IllegalArgumentException("La page " + page + " doit être compris entre 0 et " + maxPage);
-		}
+		}	
 
 		if(Arrays.stream(Artist.class.getDeclaredFields()).map(Field::getName).filter(s -> s.equals(sortProperty)).count() !=1) {
 			throw new IllegalArgumentException("La propriété " + sortProperty + " n'existe pas !");
